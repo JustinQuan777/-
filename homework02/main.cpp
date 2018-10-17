@@ -67,23 +67,17 @@ private:
     int currentColumn;
 };
 
-bool myCmp::operator()(const studData &d1, const studData &d2)
+bool myCmp::operator()(const studData &d1, const studData &d2)                  //进行对排序依据的实现
 {
-    bool result = false;
-    quint32 sortedColumn = 0x00000001<<currentColumn;
-    switch (sortedColumn) {
-    case SK::col01:;
-    // ...
-    // 请补全运算符重载函数
-    // ...
-    //
-    }
-    return result;
+    if (d1.stu.at(currentColumn+1)>d2.stu.at(currentColumn+1))                  //对数据进行升序排序
+            return 0;
+        else
+            return 1;
 
 }
 
 
-class ScoreSorter
+class ScoreSorter                                                               //
 {
 public:
     ScoreSorter(QString dataFile);
