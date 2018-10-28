@@ -4,6 +4,8 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QString>
+#include <QPixmap>
+#include <QDateTime>
 
 
 DrawWidget::DrawWidget(QWidget *parent) : QWidget(parent)
@@ -135,6 +137,14 @@ void DrawWidget::selectimg()
      delete pix;
      pix = newPix;
      update();
+}
+
+void DrawWidget::save()
+{
+    QDateTime current_date_time =QDateTime::currentDateTime();     //当前时间作为文件名(避免覆盖)
+    QString currentDate =current_date_time.toString("yyyy-MM-dd_hh-mm-ss");
+    QString fileName=tr("D:/QtSaveqgh/lab02/lab02_%1.png").arg(currentDate);
+    this->pix->save(fileName);
 }
 
 

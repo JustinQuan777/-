@@ -22,7 +22,7 @@ public slots:
     void penStyleChangged(int index=0);
 
     void penColorChangged();
-    void SaveCurrentDesk();
+
 
 private:
     CenterFrame *centerFrame;
@@ -32,6 +32,7 @@ private:
     QSpinBox *widthSpinBox;
     QToolButton *colorBtn;
     QToolButton *clearBtn;
+    QToolButton *saveBtn;
 
 };
  #endif // MAINWINDOW_H

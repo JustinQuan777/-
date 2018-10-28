@@ -9,6 +9,7 @@
 #include <QDebug>
 #include <QLayout>
 #include <Qpainter>
+#include <QDateTime>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -73,7 +74,10 @@ void MainWindow::createToolBar ()
     clearBtn->setToolTip(tr("清除当前画板"));
     connect (clearBtn, &QToolButton::clicked, centerFrame, &CenterFrame::clearPaint);
 
-
+    saveBtn = new QToolButton;
+    saveBtn->setText(tr("保存"));
+    saveBtn->setToolTip(tr("保存当前画板"));
+    connect(saveBtn,&QToolButton::clicked,centerFrame,&CenterFrame::SaveCurrentDesk);
 
 
     // 向工具栏上添加各个控件
@@ -84,6 +88,7 @@ void MainWindow::createToolBar ()
     toolBar->addWidget (colorBtn);
     toolBar->addSeparator();
     toolBar->addWidget (clearBtn);
+    toolBar->addWidget(saveBtn);
  }
 
 void MainWindow::penStyleChangged (int index)

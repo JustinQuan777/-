@@ -20,7 +20,7 @@ createUI();
 
 DrawWidget *CenterFrame::insideWidget() const
 {
-return drawWidget;
+    return drawWidget;
 }
 
 
@@ -271,6 +271,11 @@ void CenterFrame::setPenColor(QColor color)
 void CenterFrame::clearPaint()
 {
     drawWidget->clear();
+}
+
+void CenterFrame::SaveCurrentDesk()
+{
+    drawWidget->save();
 }
 
 

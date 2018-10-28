@@ -30,6 +30,7 @@ public slots:
        void setPenWidth(int width=1);
        void setPenColor(QColor color);
        void clearPaint();
+       void SaveCurrentDesk();
 
 protected slots:
        void on_btnRectClicked();
