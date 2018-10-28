@@ -116,24 +116,25 @@ void DrawWidget::clear ()
     update ();
 }
 
+
+//选择图片功能实现
 void DrawWidget::selectimg()
 {
     QString open_fileName;
-    open_fileName = QFileDialog::getOpenFileName(this,tr("选择图片"), ".",tr("Image Files (*.png *.jpg *.bmp)"));
-
-
+    open_fileName = QFileDialog::getOpenFileName(this,tr("选择图片"), ".",tr("Image Files (*.png *.jpg *.bmp)"));//这里设置了三种图片文件格式
+//未选择图片，提示警告
     if(open_fileName.isEmpty())
       {
            QMessageBox mesg;
            mesg.warning(this,"警告","未选择图片!");
            return;
       }
-      //绘制选择的图片
+
      pix->load(open_fileName);
      QPixmap *newPix = new QPixmap(size());
      newPix->fill (BACKGROUND_COLOR);
      QPainter p(newPix);
-     p.drawPixmap (QPoint((width()-pix->width())/2,(height()-pix->width())/2), *pix);
+     p.drawPixmap (QPoint((width()-pix->width())/2,(height()-pix->width())/2), *pix);//将图片放在绘图区中间
      delete pix;
      pix = newPix;
      update();
@@ -141,9 +142,9 @@ void DrawWidget::selectimg()
 
 void DrawWidget::save()
 {
-    QDateTime current_date_time =QDateTime::currentDateTime();     //当前时间作为文件名(避免覆盖)
-    QString currentDate =current_date_time.toString("yyyy-MM-dd_hh-mm-ss");
-    QString fileName=tr("D:/QtSaveqgh/lab02/lab02_%1.png").arg(currentDate);
+    QDateTime current_date_time =QDateTime::currentDateTime();    
+    QString currentDate =current_date_time.toString("yyyy-MM-dd_hh-mm-ss"); //将当前时间赋给QString类型的currentData中，作为文件名
+    QString fileName=tr("D:/QtSaveqgh/lab02/lab02_%1.png").arg(currentDate);//输出的绘图区的图片文件名
     this->pix->save(fileName);
 }
 
@@ -258,23 +259,23 @@ void DrawWidget::drawShape(const QPointF ptStart,const QPointF ptEnd,const ST::S
     QPointF point2( ptStart.x(),ptEnd.y());
     QPointF point3( ptEnd);
 
-    QVector<QPointF> points;
-    points<<point1<<point2<<point3;
+    QVector<QPointF> point_triangle;
+    point_triangle<<point1<<point2<<point3;
 
     // 画多边形
-    painter.drawPolygon(points);
+    painter.drawPolygon(point_triangle);
     }
     break;
 
-        //菱形的实现过程
+    //菱形的实现过程
     case ST::Diamond:{
     QPointF point4((ptStart.x()+ptEnd.x())/2,ptStart.y());
     QPointF point5(ptStart.x(),(ptStart.y()+ptEnd.y())/2);
     QPointF point6((ptStart.x()+ptEnd.x())/2,ptEnd.y());
     QPointF point7(ptEnd.x(),(ptStart.y()+ptEnd.y())/2);
-    QVector<QPointF> points2;
-    points2<<point4<<point5<<point6<<point7;
-    painter.drawPolygon(points2);
+    QVector<QPointF> points_diamond;
+    points_diamond<<point4<<point5<<point6<<point7;
+    painter.drawPolygon(points_diamond);
     }
         break;
 
