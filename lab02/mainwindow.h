@@ -9,30 +9,30 @@ class QComboBox;
 class QSpinBox;
 class QToolButton;
 
- class MainWindow : public QMainWindow
- {
-  Q_OBJECT
- public:
-  MainWindow(QWidget *parent = 0);
+class MainWindow : public QMainWindow
+{
+    Q_OBJECT
+public:
+    MainWindow(QWidget *parent = 0);
 
-  ~MainWindow();
+    ~MainWindow();
 
-  void createToolBar();
- public slots:
-  void penStyleChangged(int index=0);
+    void createToolBar();
+public slots:
+    void penStyleChangged(int index=0);
 
-  void penColorChangged();
+    void penColorChangged();
+    void SaveCurrentDesk();
 
- private:
-  CenterFrame *centerFrame;
-  QLabel *styleLabel;
-  QComboBox *styleComboBox;
-  QLabel *widthLabel;
-  QSpinBox *widthSpinBox;
-  QToolButton *colorBtn;
-  QToolButton *clearBtn;
-  QToolButton *imgBtn;
+private:
+    CenterFrame *centerFrame;
+    QLabel *styleLabel;
+    QComboBox *styleComboBox;
+    QLabel *widthLabel;
+    QSpinBox *widthSpinBox;
+    QToolButton *colorBtn;
+    QToolButton *clearBtn;
 
- };
+};
  #endif // MAINWINDOW_H
 

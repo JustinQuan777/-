@@ -72,16 +72,9 @@ void MainWindow::createToolBar ()
     clearBtn->setText (tr("清除"));
     clearBtn->setToolTip(tr("清除当前画板"));
     connect (clearBtn, &QToolButton::clicked, centerFrame, &CenterFrame::clearPaint);
-//tup
-    pixmap.fill(BACKGROUND_COLOR);
-    QPainter painter( &pixmap);
-    QImage image(":/new/prefix1/1.png");
-    QRect targetRect(0,0,20,20);
-    QRect sourceRect = image.rect();
-    painter.drawImage(targetRect,image,sourceRect);
-    imgBtn = new QToolButton();
-    imgBtn->setToolTip(tr("选择图片"));
-    imgBtn->setIcon(QIcon(pixmap));
+
+
+
 
     // 向工具栏上添加各个控件
     toolBar->addWidget (styleLabel);
@@ -91,14 +84,13 @@ void MainWindow::createToolBar ()
     toolBar->addWidget (colorBtn);
     toolBar->addSeparator();
     toolBar->addWidget (clearBtn);
-    toolBar->addWidget(imgBtn);
  }
 
- void MainWindow::penStyleChangged (int index)
- {
+void MainWindow::penStyleChangged (int index)
+{
   Q_UNUSED(index)
   centerFrame->setPenStyle(styleComboBox->currentData().toInt ());
- }
+}
 
 void MainWindow::penColorChangged ()
 {
@@ -111,7 +103,9 @@ void MainWindow::penColorChangged ()
       QPixmap p(20, 20);
       p.fill (color);
       colorBtn->setIcon (QIcon(p));
-  }
+    }
 }
+
+
 
 //doxygen.exe

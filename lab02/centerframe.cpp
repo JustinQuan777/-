@@ -89,15 +89,32 @@ void CenterFrame::createUserCommandArea()
     QPointF pt1(3,p.size().height()-3);
     QPointF pt2(p.size().width()/2,3);
     QPointF pt3(-3+p.size().width(),-3+p.size().height());
-    QVector<QPointF> pts;
-    pts<<pt1<<pt2<<pt2<<pt3<<pt3<<pt1;
+    QVector<QPointF> pt_triangle;
+    pt_triangle<<pt1<<pt2<<pt2<<pt3<<pt3<<pt1;
 
-  // 使用drawLines时需要注意，点数必须为偶数，两两成对作为一个边
-  // 如果是奇数，最后一个点会被舍弃
-  painter.drawLines(pts);
-  btnTriangle->setIcon (QIcon(p));
-  connect(btnTriangle,&QPushButton::clicked,
-  this,&CenterFrame::on_btnTriangleClicked);
+    // 使用drawLines时需要注意，点数必须为偶数，两两成对作为一个边
+    // 如果是奇数，最后一个点会被舍弃
+    painter.drawLines(pt_triangle);
+    btnTriangle->setIcon (QIcon(p));
+    connect(btnTriangle,&QPushButton::clicked,this,&CenterFrame::on_btnTriangleClicked);
+
+    //菱形按钮
+    btnDiamond = new QPushButton(group);
+    btnDiamond->setToolTip("绘制菱形");
+    btnDiamond->setCheckable(true);
+    btnDiamond->setIconSize(p.size());
+
+    p.fill(FOREGROUND_COLOR);
+    QPointF pt4(3,p.size().height()/2);
+    QPointF pt5(p.size().width()/2,-3+p.size().height());
+    QPointF pt6(-3+p.size().width(),p.size().height()/2);
+    QPointF pt7(p.size().width()/2,3);
+    QVector<QPointF> pt_diamond;
+    pt_diamond<<pt4<<pt5<<pt5<<pt6<<pt6<<pt7<<pt7<<pt4;
+    painter.drawPolygon(pt_diamond);
+    btnDiamond->setIcon (QIcon(p));
+    connect(btnDiamond,&QPushButton::clicked,this,&CenterFrame::on_btnDiamondClicked);
+
 
   // 文本按钮
   btnText = new QPushButton(group);
@@ -115,7 +132,20 @@ void CenterFrame::createUserCommandArea()
   btnText->setIcon (QIcon(p));
   connect(btnText,&QPushButton::clicked,
   this,&CenterFrame::on_btnTextClicked);
+  //绘制图片
+  btnimg = new QPushButton();
+  btnimg->setToolTip(tr("选择图片"));
+  btnimg->setCheckable(true);
+  btnimg->setIconSize(p.size());
 
+  p.fill(BACKGROUND_COLOR);
+  QImage image(":/new/prefix1/1.png");
+  QRect targetRect(0,0,p.size().width(),p.size().height());
+  QRect sourceRect = image.rect();
+
+    painter.drawImage(targetRect,image,sourceRect);
+    btnimg->setIcon(QIcon(p));
+    connect(btnimg,&QPushButton::clicked,this,&CenterFrame::on_btnimgClicked);
   // 选项Group布局
   QGridLayout *gridLayout = new QGridLayout();
   gridLayout->addWidget(btnRect,0,0);
@@ -123,6 +153,8 @@ void CenterFrame::createUserCommandArea()
   gridLayout->addWidget(btnTriangle,1,0);
   gridLayout->addWidget(btnLine,1,1);
   gridLayout->addWidget(btnText,2,0);
+  gridLayout->addWidget(btnDiamond,2,1);
+  gridLayout->addWidget(btnimg,3,0);
   gridLayout->setMargin(3);
   gridLayout->setSpacing(3);
   group->setLayout(gridLayout);
@@ -289,6 +321,17 @@ void CenterFrame::on_btnTriangleClicked()
     }
 }
 
+void CenterFrame::on_btnDiamondClicked()
+{
+    if(btnDiamond->isChecked()){
+        drawWidget->setShapeType(ST::Diamond);
+        updateButtonStatus();
+    }
+    else{
+        drawWidget->setShapeType(ST::None);
+    }
+}
+
 void CenterFrame::on_btnTextClicked()
 {
 
@@ -303,4 +346,20 @@ void CenterFrame::on_btnTextClicked()
 void CenterFrame::on_edtTextEdited(const QString &text)
 {
     drawWidget->setDrawnText(text);
+}
+
+void CenterFrame::on_btnimgClicked()
+{
+    if(btnimg->isChecked())
+         {
+             drawWidget->setShapeType(ST::picture);
+             drawWidget->selectimg();
+             updateButtonStatus();
+         }
+         else
+         {
+
+             drawWidget->setShapeType(ST::None);
+         }
+
 }
